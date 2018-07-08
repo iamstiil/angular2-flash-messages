@@ -42,7 +42,8 @@ export class FlashMessagesComponent implements OnInit {
           closeOnClick: false,
           showCloseBtn: false,
           cssClass: '',
-          text: "default message"
+          text: "default message",
+          clear: false
         };
         
         for (var attrname in options) { (<any>defaults)[attrname] = (<any>options)[attrname]; }
@@ -53,6 +54,12 @@ export class FlashMessagesComponent implements OnInit {
             this._remove(message);
             this._cdRef.detectChanges();
         }, defaults.timeout);
+
+        if (defaults.clear) {
+          for (let msg in this.messages) {
+            this.close(<FlashMessage>this.messages[msg]);
+          }
+        }
 
         this.messages.push(message);
         this._cdRef.detectChanges();
